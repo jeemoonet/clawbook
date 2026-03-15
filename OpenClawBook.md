@@ -28,23 +28,19 @@
   - 聊天 App（Telegram/WhatsApp/飞书等）→ Gateway
   - CLI、Web 控制台、macOS 应用、iOS/Android 节点 → Gateway
 
-### 1.3 运行环境要求
-
-- **Node.js**：22+（推荐 Node 24）
-- **系统**：macOS、Linux、Windows（建议 WSL2）
-- **资源**：约 2GB 内存、500MB 磁盘（参考社区文档）
-
 ---
 
 ## 二、官方文档与索引
 
 ### 2.1 主要来源
 
-| 来源 | 说明 |
-|------|------|
-| [docs.openclaw.ai](https://docs.openclaw.ai) | 英文主站，Mintlify 构建 |
-| [docs.openclaw.ai/zh-CN/](https://docs.openclaw.ai/zh-CN/start/wizard) | 中文文档（部分页面） |
-| [docs.openclaw.ai/llms.txt](https://docs.openclaw.ai/llms.txt) | 完整文档索引（供 LLM/检索用） |
+
+| 来源                                                                     | 说明                |
+| ---------------------------------------------------------------------- | ----------------- |
+| [docs.openclaw.ai](https://docs.openclaw.ai)                           | 英文主站，Mintlify 构建  |
+| [docs.openclaw.ai/zh-CN/](https://docs.openclaw.ai/zh-CN/start/wizard) | 中文文档（部分页面）        |
+| [docs.openclaw.ai/llms.txt](https://docs.openclaw.ai/llms.txt)         | 完整文档索引（供 LLM/检索用） |
+
 
 ### 2.2 文档分层（按主题）
 
@@ -78,13 +74,13 @@
 
 ### 3.2 推荐首次配置流程
 
-1. **新手向导**（推荐）：  
-   `openclaw onboard --install-daemon`  
+1. **新手向导**（推荐）：
+  `openclaw onboard --install-daemon`  
    可一次性配置：本地/远程 Gateway、渠道、Skills、工作区默认值。
-2. **快速开始聊天（不先配渠道）**：  
-   `openclaw dashboard` 在浏览器中打开控制台即可聊天。
-3. **重新配置**：  
-   `openclaw configure`
+2. **快速开始聊天（不先配渠道）**：
+  `openclaw dashboard` 在浏览器中打开控制台即可聊天。
+3. **重新配置**：
+  `openclaw configure`
 
 ### 3.3 向导模式
 
@@ -133,7 +129,7 @@ openclaw onboard --non-interactive \
 ### 5.2 配对（Pairing）
 
 - 私信默认多为「配对」：首条消息会发验证码，在服务器执行  
-  `openclaw pairing approve telegram <code>` 批准。
+`openclaw pairing approve telegram <code>` 批准。
 - 常用命令：  
   - `openclaw pairing list`  
   - `openclaw pairing approve <channel> <code>`
@@ -186,8 +182,8 @@ openclaw onboard --non-interactive \
 ## 八、多 Agent 与工作区
 
 - **添加独立 Agent**：  
-  `openclaw agents add <name>`  
-  可配合 `--workspace`、`--model`、`--bind` 等。
+`openclaw agents add <name>`  
+可配合 `--workspace`、`--model`、`--bind` 等。
 - **切换**：`openclaw agents switch <name>`
 - **工作区**：默认 `~/.openclaw/workspace`，含 Agent 指令、用户偏好、记忆等；完整布局见官方「Agent Workspace」文档。
 
@@ -215,21 +211,23 @@ openclaw onboard --non-interactive \
 
 ## 十一、常用 CLI 速查
 
-| 命令 | 用途 |
-|------|------|
-| `openclaw onboard` | 新手向导 |
-| `openclaw configure` | 重新配置 |
-| `openclaw dashboard` | 打开 Web 控制台 |
-| `openclaw gateway install/status` | 网关守护进程 |
-| `openclaw gateway --port 18789` | 手动启动网关 |
-| `openclaw health` / `openclaw doctor` | 健康与诊断 |
-| `openclaw pairing list/approve` | 配对管理 |
-| `openclaw channels login` | 渠道登录（如 WhatsApp） |
-| `openclaw agents add/switch` | 多 Agent 管理 |
-| `openclaw skills list/install/enable` | Skills 管理 |
-| `openclaw models status` | 模型状态 |
-| `openclaw logs --follow` | 实时日志 |
-| `openclaw message send --target ... --message "..."` | 发送测试消息 |
+
+| 命令                                                   | 用途               |
+| ---------------------------------------------------- | ---------------- |
+| `openclaw onboard`                                   | 新手向导             |
+| `openclaw configure`                                 | 重新配置             |
+| `openclaw dashboard`                                 | 打开 Web 控制台       |
+| `openclaw gateway install/status`                    | 网关守护进程           |
+| `openclaw gateway --port 18789`                      | 手动启动网关           |
+| `openclaw health` / `openclaw doctor`                | 健康与诊断            |
+| `openclaw pairing list/approve`                      | 配对管理             |
+| `openclaw channels login`                            | 渠道登录（如 WhatsApp） |
+| `openclaw agents add/switch`                         | 多 Agent 管理       |
+| `openclaw skills list/install/enable`                | Skills 管理        |
+| `openclaw models status`                             | 模型状态             |
+| `openclaw logs --follow`                             | 实时日志             |
+| `openclaw message send --target ... --message "..."` | 发送测试消息           |
+
 
 手册可设「命令速查表」并链接到官方 CLI 文档。
 
@@ -252,47 +250,35 @@ openclaw onboard --non-interactive \
 
 ## 十三、建议的《OpenClaw 使用手册》大纲
 
-1. **前言与阅读说明**  
-   - 适用读者、环境要求、文档与社区链接。
-
-2. **简介**  
-   - OpenClaw 是什么、架构概览、典型使用场景。
-
-3. **安装与运行**  
-   - Node 版本、npm/pnpm 安装、一键脚本（可选）、从源码安装（可选）。  
-   - 首次运行：`onboard`、`dashboard`、`gateway`。
-
-4. **首次配置（向导）**  
-   - 快速开始 vs 高级、模型/认证、工作区、Gateway、渠道、守护进程、健康检查、Skills 推荐。  
-   - 非交互/脚本化示例（可选小节）。
-
-5. **AI 模型与认证**  
-   - 支持的模型与提供商、API Key / OAuth 配置、`models status`。
-
-6. **渠道配置**  
-   - Telegram、WhatsApp、飞书（必选 2～3 个重点写），其余列名称 + 链接官方。  
-   - 配对流程与 `pairing` 命令、允许列表与安全建议。
-
-7. **Gateway 与守护进程**  
-   - 端口、绑定、认证、安装/启停、日志与健康检查。
-
-8. **Skills 与浏览器 Relay**  
-   - Skills 安装与启用、配置要点；Browser Relay 三种模式与适用场景。
-
-9. **多 Agent 与工作区**  
-   - 何时用多 Agent、`agents add/switch`、工作区路径说明。
-
-10. **Web 控制台与日常使用**  
-    - 控制台功能概览、远程访问简述。
-
-11. **配置与路径参考**  
-    - `openclaw.json` 与重要目录、链接官方配置参考。
-
-12. **命令速查与故障排查**  
-    - 常用命令表、`doctor`/`health`/`logs`、常见错误与解决思路、FAQ 链接。
-
-13. **参考资料与更新**  
-    - 官方文档、社区教程、版本与更新说明。
+1. **前言与阅读说明**
+  - 适用读者、环境要求、文档与社区链接。
+2. **简介**
+  - OpenClaw 是什么、架构概览、典型使用场景。
+3. **安装与运行**
+  - Node 版本、npm/pnpm 安装、一键脚本（可选）、从源码安装（可选）。  
+  - 首次运行：`onboard`、`dashboard`、`gateway`。
+4. **首次配置（向导）**
+  - 快速开始 vs 高级、模型/认证、工作区、Gateway、渠道、守护进程、健康检查、Skills 推荐。  
+  - 非交互/脚本化示例（可选小节）。
+5. **AI 模型与认证**
+  - 支持的模型与提供商、API Key / OAuth 配置、`models status`。
+6. **渠道配置**
+  - Telegram、WhatsApp、飞书（必选 2～3 个重点写），其余列名称 + 链接官方。  
+  - 配对流程与 `pairing` 命令、允许列表与安全建议。
+7. **Gateway 与守护进程**
+  - 端口、绑定、认证、安装/启停、日志与健康检查。
+8. **Skills 与浏览器 Relay**
+  - Skills 安装与启用、配置要点；Browser Relay 三种模式与适用场景。
+9. **多 Agent 与工作区**
+  - 何时用多 Agent、`agents add/switch`、工作区路径说明。
+10. **Web 控制台与日常使用**
+  - 控制台功能概览、远程访问简述。
+11. **配置与路径参考**
+  - `openclaw.json` 与重要目录、链接官方配置参考。
+12. **命令速查与故障排查**
+  - 常用命令表、`doctor`/`health`/`logs`、常见错误与解决思路、FAQ 链接。
+13. **参考资料与更新**
+  - 官方文档、社区教程、版本与更新说明。
 
 ---
 

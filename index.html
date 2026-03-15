@@ -7,13 +7,13 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
-      --bg: #0f0f12;
-      --surface: #18181c;
-      --border: #2a2a30;
-      --text: #e4e4e7;
-      --text-muted: #a1a1aa;
-      --accent: #7c9cf5;
-      --accent-hover: #9bb0f8;
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --border: #e5e7eb;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
       --font-sans: "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
       --font-mono: "SF Mono", "Cascadia Code", "Consolas", monospace;
     }
@@ -61,22 +61,39 @@
       border-left: 2px solid transparent;
       margin-left: 0;
     }
-    .sidebar a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-    .sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(124,156,245,0.08); }
-    .sidebar .folder { margin-top: 0.5rem; }
-    .sidebar .folder > .label {
-      padding: 0.35rem 1rem;
+    .sidebar a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+    .sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(37,99,235,0.08); }
+    .sidebar .folder { margin-top: 0.25rem; }
+    .sidebar .folder-toggle {
+      display: flex;
+      align-items: center;
+      padding: 0.4rem 1rem;
       font-size: 0.8rem;
+      font-weight: 600;
       color: var(--text-muted);
-      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      border-left: 2px solid transparent;
     }
-    .sidebar .folder ul { padding-left: 0.5rem; }
+    .sidebar .folder-toggle:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+    .sidebar .folder-toggle .icon {
+      width: 1rem;
+      margin-right: 0.35rem;
+      transition: transform 0.2s ease;
+    }
+    .sidebar .folder.collapsed .folder-toggle .icon { transform: rotate(-90deg); }
+    .sidebar .folder-body { overflow: hidden; }
+    .sidebar .folder.collapsed .folder-body { display: none; }
+    .sidebar .folder-body ul { padding-left: 0.5rem; }
     .main {
       flex: 1;
       overflow-y: auto;
       padding: 2rem 3rem 4rem;
       max-width: 52rem;
       margin: 0 auto;
+      background: var(--surface);
+      border-radius: 8px 0 0 0;
+      box-shadow: -1px 0 0 var(--border);
     }
     .main .placeholder {
       color: var(--text-muted);
@@ -92,7 +109,7 @@
     .main .content h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; }
     .main .content pre, .main .content code {
       font-family: var(--font-mono);
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 6px;
     }
@@ -109,7 +126,7 @@
       padding: 0.5rem 0.75rem;
       text-align: left;
     }
-    .main .content th { background: var(--surface); color: var(--text-muted); font-weight: 600; }
+    .main .content th { background: var(--bg); color: var(--text-muted); font-weight: 600; }
     .main .content a { color: var(--accent); text-decoration: none; }
     .main .content a:hover { text-decoration: underline; }
     .main .content blockquote {
@@ -121,7 +138,7 @@
     .main .content hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
     .main .content ul, .main .content ol { padding-left: 1.5rem; }
     .loading { color: var(--text-muted); }
-    .error { color: #f87171; }
+    .error { color: #dc2626; }
     header {
       padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border);
@@ -137,12 +154,14 @@
     <nav class="sidebar">
       <h2>根目录</h2>
       <ul id="nav-root"></ul>
-      <h2>KB 企业应用手册</h2>
-      <ul id="nav-kb"></ul>
-      <h2>KB / skills</h2>
-      <ul id="nav-skills"></ul>
-      <h2>KB / images</h2>
-      <ul id="nav-images"></ul>
+      <div class="folder" id="folder-kb">
+        <div class="folder-toggle" aria-expanded="true"><span class="icon">▼</span> KB 企业应用手册</div>
+        <div class="folder-body"><ul id="nav-kb"></ul></div>
+      </div>
+      <div class="folder" id="folder-skills">
+        <div class="folder-toggle" aria-expanded="true"><span class="icon">▼</span> KB / skills</div>
+        <div class="folder-body"><ul id="nav-skills"></ul></div>
+      </div>
     </nav>
     <main class="main">
       <div id="placeholder" class="placeholder">请在左侧选择一篇文档</div>
@@ -154,20 +173,16 @@
   <script>
     const FILES = [
       "OpenClawBook.md",
-      "KB/README.md",
       "KB/index.md",
-      "KB/01-企业应用概述与考虑角度.md",
+      "KB/01-控制面板Dashboard.md",
       "KB/02-安装与运行.md",
-      "KB/02-1-Dashboard使用说明.md",
       "KB/03-飞书应用创建与发布.md",
       "KB/04-Agent人格与记忆.md",
       "KB/05-多团队与多Agent.md",
       "KB/06-安全与合规.md",
       "KB/07-飞书企业应用场景.md",
       "KB/08-运维与故障排查.md",
-      "KB/12-skills.md",
-      "KB/images/README.md",
-      "KB/skills/README.md",
+      "KB/09-技能skills.md",
       "KB/skills/index.md",
       "KB/skills/agent-browser.md",
       "KB/skills/automation-workflows.md",
@@ -190,14 +205,13 @@
     ];
 
     function groupFiles() {
-      const root = [], kb = [], skills = [], images = [];
+      const root = [], kb = [], skills = [];
       for (const p of FILES) {
         if (p.startsWith("KB/skills/")) skills.push(p);
-        else if (p.startsWith("KB/images/")) images.push(p);
         else if (p.startsWith("KB/")) kb.push(p);
         else root.push(p);
       }
-      return { root, kb, skills, images };
+      return { root, kb, skills };
     }
 
     function renderNav(containerId, list) {
@@ -219,7 +233,6 @@
     renderNav("nav-root", groups.root);
     renderNav("nav-kb", groups.kb);
     renderNav("nav-skills", groups.skills);
-    renderNav("nav-images", groups.images);
 
     const placeholder = document.getElementById("placeholder");
     const content = document.getElementById("content");
@@ -260,6 +273,15 @@
 
     document.querySelectorAll(".sidebar").forEach(sidebar => {
       sidebar.addEventListener("click", (e) => {
+        const toggle = e.target.closest(".folder-toggle");
+        if (toggle) {
+          const folder = toggle.closest(".folder");
+          if (folder) {
+            folder.classList.toggle("collapsed");
+            toggle.setAttribute("aria-expanded", folder.classList.contains("collapsed") ? "false" : "true");
+          }
+          return;
+        }
         const a = e.target.closest("a[data-path]");
         if (!a) return;
         e.preventDefault();
